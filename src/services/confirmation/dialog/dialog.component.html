@@ -1,0 +1,44 @@
+<div class="confirmation-dialog">
+  <!-- Content -->
+  <div class="confirmation-dialog-content">
+    <!-- Icon -->
+    <ng-container *ngIf="data.icon.show">
+      <div
+        class="confirmation-dialog-content-icon"
+        [class.info]="data.type === ConfirmationDialogType.INFO"
+        [class.error]="data.type === ConfirmationDialogType.ERROR"
+        [class.warn]="data.type === ConfirmationDialogType.WARN"
+        [class.success]="data.type === ConfirmationDialogType.SUCCESS"
+      >
+        <mat-icon [svgIcon]="data.icon.name"></mat-icon>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="data.title || data.message">
+      <div class="confirmation-dialog-content-message">
+        <!-- Title -->
+        <ng-container *ngIf="data.title">
+          <div [innerHTML]="data.title"></div>
+        </ng-container>
+
+        <!-- Message -->
+        <ng-container *ngIf="data.message">
+          <div [innerHTML]="data.message"></div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Actions -->
+  <div class="confirmation-dialog-actions">
+    <!-- Cancel -->
+    <button mat-stroked-button [matDialogClose]="'cancelled'">
+      {{ data.actions.cancel.label }}
+    </button>
+
+    <!-- Confirm -->
+    <button mat-flat-button [matDialogClose]="'confirmed'">
+      {{ data.actions.confirm.label }}
+    </button>
+  </div>
+</div>

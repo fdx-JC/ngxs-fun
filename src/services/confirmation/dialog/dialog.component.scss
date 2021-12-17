@@ -1,0 +1,21 @@
+@import 'variables';
+
+.confirmation-dialog {
+  &-content {
+    padding: $gutter-size * 2;
+
+    display: flex;
+
+    &-icon {
+      margin-right: $gutter-size;
+    }
+  }
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $gutter-size;
+    padding: $gutter-size $gutter-size * 1.5;
+
+    background-color: $bg-gray;
+  }
+}
