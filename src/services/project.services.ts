@@ -6,7 +6,7 @@ import { ISprint } from 'src/types/sprint.type';
 
 const { whoIsSupportingApi } = environment.urls;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SprintService {
   constructor(private http: HttpClient) {}
   getProjects(): Observable<ISprint[]> {
