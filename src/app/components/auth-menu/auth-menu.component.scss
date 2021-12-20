@@ -1,0 +1,14 @@
+.auth-menu {
+  position: relative;
+  &-avatar {
+    cursor: pointer;
+  }
+  &-logout {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &-option {
+    min-width: 160px;
+  }
+}

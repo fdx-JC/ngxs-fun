@@ -1,39 +1,50 @@
+@import "variables";
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: $font-size;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  background-color: $brand-background;
+}
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$ngxs-fun-primary: mat.define-palette(mat.$indigo-palette);
-$ngxs-fun-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+.swiper {
+  width: 100%;
+  height: 300px;
+  margin: 50px auto;
+}
 
-// The warn palette is optional (defaults to red).
-$ngxs-fun-warn: mat.define-palette(mat.$red-palette);
+.swiper-slide {
+  background: #f1f1f1;
+  color: #000;
+  text-align: center;
+  line-height: 300px;
+}
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$ngxs-fun-theme: mat.define-light-theme((
-  color: (
-    primary: $ngxs-fun-primary,
-    accent: $ngxs-fun-accent,
-    warn: $ngxs-fun-warn,
-  )
-));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($ngxs-fun-theme);
-
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// @import '~@angular/material/theming';
+// consider use material theming class if the project uses more scss functions
+.with-shadow {
+  // @include mat-elevation-transition;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  // @include mat-elevation(2);
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  &--active {
+    // @include mat-elevation(11);
+    box-shadow: 0px 6px 7px -4px rgb(0 0 0 / 20%),
+      0px 11px 15px 1px rgb(0 0 0 / 14%), 0px 4px 20px 3px rgb(0 0 0 / 12%);
+  }
+}

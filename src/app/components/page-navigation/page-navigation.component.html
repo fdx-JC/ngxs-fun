@@ -1,0 +1,31 @@
+<div
+  class="page-navigation with-shadow"
+  [class.with-shadow--active]="hover"
+  (mouseenter)="mouseEnter()"
+  (mouseleave)="mouseLeave()"
+>
+  <button
+    class="page-navigation-button"
+    mat-flat-button
+    [color]="'primary'"
+    (click)="goToPreviousStep()"
+  >
+    <mat-icon [svgIcon]="'feather:arrow-left'"></mat-icon>
+    <span class="page-navigation-text"></span>Prev
+  </button>
+  <div class="page-navigation-title">
+    {{ title }}
+  </div>
+  <button
+    class="page-navigation-button"
+    mat-flat-button
+    [color]="'primary'"
+    (click)="goToNextStep()"
+  >
+    <span class="page-navigation-text">Next</span>
+    <mat-icon
+      class="page-navigation-icon"
+      [svgIcon]="'feather:arrow-right'"
+    ></mat-icon>
+  </button>
+</div>

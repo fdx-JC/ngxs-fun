@@ -1,20 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { Subscription, tap } from 'rxjs';
-import { SprintService } from 'src/services/project.services';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MsalBroadcastService } from '@azure/msal-angular';
+import { InteractionStatus } from '@azure/msal-browser';
+import { Store } from '@ngxs/store';
+import { filter, Observable, of, Subscription } from 'rxjs';
+import { IAuthUser } from './models/auth.model';
+import { AuthenticationService } from './services/authentication.service';
+import { Auth } from './store/auth.actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'ngxs-fun';
-  sub: Subscription = new Subscription();
-  constructor(private sprintService: SprintService) {}
+  appSubscription: Subscription = new Subscription();
+
+  loginDisplay = false;
+  projects$: Observable<any> = of(null);
+  authUser: IAuthUser | null = null;
+
+  constructor(
+    private msalBroadcastService: MsalBroadcastService,
+    private authenticationService: AuthenticationService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-    this.sub = this.sprintService
-      .getProjects()
-      .subscribe((data) => console.log('....................', data));
+    this.appSubscription = this.msalBroadcastService.inProgress$
+      .pipe(
+        filter((status: InteractionStatus) => status === InteractionStatus.None)
+      )
+      .subscribe(() => {
+        const user = this.authenticationService.getAuthUser();
+        if (user) {
+          const currentUser = {
+            username: user.username,
+            name: user.name,
+          };
+          this.store.dispatch(new Auth.LoadCurrentUser(currentUser));
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.appSubscription?.unsubscribe();
   }
 }

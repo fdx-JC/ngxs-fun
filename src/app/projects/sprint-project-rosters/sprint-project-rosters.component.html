@@ -1,0 +1,16 @@
+<div class="project-rosters">
+  <div
+    class="project-roster with-shadow"
+    *ngFor="let position of rostersByPosition | keyvalue"
+  >
+    <div class="project-roster-header">
+      {{ position.key }}
+      <div *ngIf="!!position.value?.length" class="project-roster-count">
+        {{ position.value?.length }}
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+
+    <app-rosters [rosterEmails]="position.value"></app-rosters>
+  </div>
+</div>

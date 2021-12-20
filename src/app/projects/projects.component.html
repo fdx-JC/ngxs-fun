@@ -1,0 +1,11 @@
+<ng-container *ngIf="loading$ | async; else loaded">
+  <app-page-loader></app-page-loader>
+</ng-container>
+<ng-template #loaded>
+  <div class="projects">
+    <app-sprint-projects [sprintProjects]="currentSprint"></app-sprint-projects>
+  </div>
+  <app-page-navigation
+    [title]="currentSprintDate | displayDateRange"
+  ></app-page-navigation>
+</ng-template>

@@ -1,0 +1,22 @@
+<div *ngIf="currentUser$ | async as currentUser; else unauthorized">
+  <div class="auth-menu">
+    <ngx-avatar
+      class="auth-menu-avatar"
+      [matMenuTriggerFor]="menu"
+      size="48"
+      [name]="currentUser?.name ?? currentUser?.username"
+    ></ngx-avatar>
+    <mat-menu #menu="matMenu">
+      <div mat-menu-item disabled>
+        {{ currentUser?.username }}
+      </div>
+      <button mat-menu-item (click)="logout()" class="auth-menu-option">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+<ng-template #unauthorized>
+  <button mat-button (click)="login()">Login</button>
+</ng-template>

@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { IUser } from 'src/types/user.type';
 import { environment } from 'src/environments/environment';
+import { IUser } from '../models/user.model';
 
 const { whoIsSupportingApi } = environment.urls;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
   getUsers(emails: string[]): Observable<IUser[]> {
@@ -30,7 +32,7 @@ export class UserService {
                 ? null
                 : this.sanitizer.bypassSecurityTrustResourceUrl(
                     `data:image/jpeg;base64,${base64String}`
-                  )
+                  ),
           };
         });
 

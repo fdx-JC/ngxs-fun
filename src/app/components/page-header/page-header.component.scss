@@ -1,0 +1,44 @@
+@import "mq";
+@import "variables";
+
+.page-header {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+
+  &-logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    img {
+      height: 40px;
+    }
+  }
+
+  &-title {
+    visibility: hidden;
+    flex: 1 1 auto;
+    text-indent: $gutter-size;
+    font-size: $font-size * 1.2;
+  }
+
+  &-placeholder {
+    height: 56px;
+  }
+}
+
+@include screen("gt-sm") {
+  .page-header {
+    &-title {
+      font-size: $font-size * 1.5;
+      visibility: visible;
+    }
+
+    &-placeholder {
+      height: 64px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 @include mat-core();
 
 $md-primary: (
@@ -30,8 +30,8 @@ $md-primary: (
     A100: #000000,
     A200: #ffffff,
     A400: #ffffff,
-    A700: #ffffff
-  )
+    A700: #ffffff,
+  ),
 );
 
 $md-secondary: (
@@ -63,8 +63,8 @@ $md-secondary: (
     A100: #000000,
     A200: #000000,
     A400: #000000,
-    A700: #000000
-  )
+    A700: #000000,
+  ),
 );
 
 $findex-primary: mat-palette($md-primary);
@@ -73,4 +73,5 @@ $findex-warn: mat-palette($mat-deep-orange);
 
 $findex-theme: mat-light-theme($findex-primary, $findex-accent, $findex-warn);
 
-@include angular-material-theme($findex-theme);
+@include all-component-themes($findex-theme);
+// @include mat.all-component-themes($findex-theme);

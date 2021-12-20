@@ -1,0 +1,13 @@
+<div class="rosters">
+  <div *ngIf="users$ | async">
+    <!-- // *ngIf="loading" -->
+
+    <div *ngFor="let user of users">
+      {{ user?.displayName }}
+    </div>
+  </div>
+  <div>add new roster</div>
+  <div class="rosters-loader">
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </div>
+</div>

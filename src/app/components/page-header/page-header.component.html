@@ -1,0 +1,15 @@
+<mat-toolbar
+  color="primary"
+  class="page-header with-shadow"
+  [class.with-shadow--active]="showShadow"
+>
+  <div class="page-header-logo">
+    <img src="assets/images/findex_logo.svg" alt="Findex" />
+  </div>
+  <div class="page-header-title">{{ title }}</div>
+
+  <div class="page-header-menu">
+    <ng-content select="[page-header-menu]"></ng-content>
+  </div>
+</mat-toolbar>
+<div class="page-header-placeholder"></div>

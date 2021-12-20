@@ -1,0 +1,37 @@
+@import "variables";
+
+@function contrast-color($color, $dark, $light) {
+  @return if(lightness($color) < $threshold, $light, $dark);
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  bottom: $gutter-size;
+  padding: $gutter-size;
+}
+
+.page-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: $gutter-size / 2;
+  z-index: 999;
+  border-radius: $gutter-size * 2;
+  background-color: $brand-primary;
+  color: $brand-primary-text;
+
+  &-button {
+    border-radius: $gutter-size * 2;
+  }
+
+  &-text {
+    padding: 0 $gutter-size / 2;
+  }
+
+  &-title {
+    font-size: $font-size;
+  }
+}
