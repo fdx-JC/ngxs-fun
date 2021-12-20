@@ -1,0 +1,15 @@
+@import "variables";
+
+.user-item {
+  display: flex;
+  align-items: center;
+
+  gap: $gutter-size;
+
+  &-content {
+    display: flex;
+    align-items: center;
+
+    gap: $gutter-size / 2;
+  }
+}

@@ -1,0 +1,27 @@
+@import "variables";
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  &-image {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    overflow: hidden;
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(127, 140, 141);
+
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  &-text {
+    width: 100%;
+  }
+}

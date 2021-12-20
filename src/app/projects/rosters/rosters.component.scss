@@ -1,8 +1,23 @@
+@import "variables";
+
 .rosters {
   position: relative;
+  padding: $gutter-size;
 
   &-loader {
+    width: 100%;
+
     position: absolute;
+    left: 0;
     bottom: 0;
+  }
+
+  &-users {
+    display: flex;
+    flex-direction: column;
+    gap: $gutter-size / 2;
+  }
+
+  &-add-user {
   }
 }

@@ -1,0 +1,13 @@
+<div class="user-item">
+  <div class="user-item-content">
+    <app-user-avatar
+      [size]="size"
+      [name]="user.displayName"
+      [photo]="user.photo"
+    ></app-user-avatar>
+    {{ user.displayName }}
+  </div>
+  <div class="user-item-actions">
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</div>

@@ -4,15 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
-import { AvatarModule } from 'ngx-avatar';
-
 import { AuthMenuComponent } from './auth-menu.component';
+import { UserAvatarModule } from '../user-avatar/user-avatar.module';
 
 @NgModule({
   declarations: [AuthMenuComponent],
   imports: [
     CommonModule,
-    AvatarModule,
+    UserAvatarModule,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,

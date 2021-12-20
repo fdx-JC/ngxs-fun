@@ -1,0 +1,13 @@
+<div class="user-avatar">
+  <div
+    class="user-avatar-image"
+    [style.width.px]="size"
+    [style.height.px]="size"
+  >
+    <img *ngIf="photo; else letterTmpl" [src]="photo" />
+  </div>
+
+  <ng-template #letterTmpl>
+    <span class="user-avatar-text">{{ name | displayNameInitials }}</span>
+  </ng-template>
+</div>

@@ -17,6 +17,7 @@ import { SprintProjectsComponent } from './sprint-projects/sprint-projects.compo
 import { SprintProjectRostersComponent } from './sprint-project-rosters/sprint-project-rosters.component';
 import { RostersComponent } from './rosters/rosters.component';
 import { UserState } from './store/users/users.state';
+import { UserItemModule } from '../components/user-item/user-item.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserState } from './store/users/users.state';
     NgxsModule.forFeature([ProjectState, UserState]),
     PageLoaderModule,
     PageNavigationModule,
+    UserItemModule,
     MatIconModule,
     MatButtonModule,
     MatDividerModule,

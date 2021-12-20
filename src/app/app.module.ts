@@ -28,6 +28,7 @@ import { AuthMenuModule } from './components/auth-menu/auth-menu.module';
 import { AuthState } from './store/auth.state';
 import { AuthFailModule } from './components/auth-fail/auth-fail.module';
 import { IconsModule } from './components/icons/icons.module';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +37,9 @@ import { IconsModule } from './components/icons/icons.module';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxsModule.forRoot([AuthState]),
+    NgxsModule.forRoot([AuthState], {
+      developmentMode: !environment.production,
+    }),
     NgxsReduxDevtoolsPluginModule.forRoot({ name: 'NGXS - Who is supporting' }),
     MsalModule,
     PageHeaderModule,

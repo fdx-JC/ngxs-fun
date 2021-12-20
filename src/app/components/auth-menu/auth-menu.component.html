@@ -1,11 +1,11 @@
 <div *ngIf="currentUser$ | async as currentUser; else unauthorized">
   <div class="auth-menu">
-    <ngx-avatar
+    <app-user-avatar
       class="auth-menu-avatar"
       [matMenuTriggerFor]="menu"
-      size="48"
+      [size]="48"
       [name]="currentUser?.name ?? currentUser?.username"
-    ></ngx-avatar>
+    ></app-user-avatar>
     <mat-menu #menu="matMenu">
       <div mat-menu-item disabled>
         {{ currentUser?.username }}
