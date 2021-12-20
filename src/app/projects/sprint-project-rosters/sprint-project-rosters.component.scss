@@ -33,6 +33,6 @@ $BADGE_SIZE: 1.25rem;
   }
 
   &-divider {
-    margin: $gutter-size / 2 0;
+    margin: calc($gutter-size / 2) 0;
   }
 }

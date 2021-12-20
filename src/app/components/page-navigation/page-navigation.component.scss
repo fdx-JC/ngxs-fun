@@ -17,18 +17,18 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: $gutter-size / 2;
+  padding: calc($gutter-size / 2);
   z-index: 999;
   border-radius: $gutter-size * 2;
   background-color: $brand-primary;
   color: $brand-primary-text;
 
   &-button {
-    border-radius: $gutter-size * 2;
+    border-radius: calc($gutter-size * 2);
   }
 
   &-text {
-    padding: 0 $gutter-size / 2;
+    padding: 0 calc($gutter-size / 2);
   }
 
   &-title {

@@ -1,15 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, Subscription, tap } from 'rxjs';
+import { combineLatest, Observable, Subscription, tap } from 'rxjs';
+import groupBy from 'lodash/groupBy';
+
 import { IProject } from '../models/project.model';
 import { Project } from './store/projects/projects.actions';
-import { ProjectState } from './store/projects/projects.state';
-import groupBy from 'lodash/groupBy';
+import {
+  ICurrentSprint,
+  ISprintProject,
+  ProjectState,
+} from './store/projects/projects.state';
 import { isCurrentDateRange } from '../utils/date-helper';
-
-interface IProjectSprint {
-  [sprintDate: string]: IProject[];
-}
 
 @Component({
   selector: 'app-projects',
@@ -17,36 +18,49 @@ interface IProjectSprint {
   styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  @Select(ProjectState.selectLoadingProjects)
+  @Select(ProjectState.selectLoadingSprintProjects)
   loading$: Observable<boolean>;
-  @Select(ProjectState.selectAllProjects) projects$: Observable<IProject[]>;
-
-  currentSprint: IProject[];
-  currentSprintDate: string;
-  sprints: IProjectSprint;
+  @Select(ProjectState.selectSprintProjects)
+  sprints$: Observable<ISprintProject>;
+  @Select(ProjectState.selectCurrentSprint)
+  currentSprint$: Observable<ICurrentSprint>;
+  @Select(ProjectState.selectCurrentSprintIndex)
+  currentIndex$: Observable<number>;
+  @Select(ProjectState.selectSprintsTotal)
+  total$: Observable<number>;
 
   projectSubscription: Subscription = new Subscription();
   constructor(private store: Store) {}
 
+  index: number;
+  isFirst: boolean;
+  isLast: boolean;
+
   ngOnInit(): void {
-    this.currentSprint = this.sprints?.[0];
-
-    this.projectSubscription = this.projects$.subscribe((data) => {
-      this.sprints = groupBy(data, 'sprint');
-
-      Object.keys(this.sprints).find((key) => {
-        const dates = key.split('-');
-        const startDate = dates[0].trim();
-        const endDate = dates[1].trim();
-
-        if (isCurrentDateRange(startDate, endDate)) {
-          this.currentSprintDate = key;
-          this.currentSprint = this.sprints[key];
-        }
-      });
-    });
-
     this.store.dispatch(new Project.GetProjects());
+
+    this.projectSubscription = combineLatest([
+      this.currentIndex$,
+      this.total$,
+    ]).subscribe(([index, total]) => {
+      this.index = index;
+      this.isFirst = index === 0;
+      this.isLast = index + 1 === total;
+    });
+  }
+
+  updateCurrentSprint(index: number): void {
+    this.store.dispatch(new Project.SetCurrentSprint(index));
+  }
+
+  nextSprint() {
+    // this.index = this.index + 1;
+    this.store.dispatch(new Project.SetCurrentSprint(this.index + 1));
+  }
+
+  prevSprint() {
+    // this.index = this.index - 1;
+    this.store.dispatch(new Project.SetCurrentSprint(this.index - 1));
   }
 
   ngOnDestroy(): void {

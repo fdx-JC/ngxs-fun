@@ -7,6 +7,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class PageNavigationComponent implements OnInit {
   @Input() title: string = '';
+  @Input() disablePrev: boolean;
+  @Input() disableNext: boolean;
+
   @Output() prev = new EventEmitter();
   @Output() next = new EventEmitter();
 

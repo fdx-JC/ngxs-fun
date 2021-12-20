@@ -5,6 +5,11 @@ export namespace Project {
     static readonly type = '[Project API] Fetch Projects';
   }
 
+  export class SetCurrentSprint {
+    static readonly type = '[Project Page] Set Current Sprint';
+    constructor(public sprintKey: number) {}
+  }
+
   export class AddRosterToProject {
     static readonly type = '[Project Page] Add Roster to Project';
     constructor(roster: IRosterItem, projectId: string, sprintId: string) {}

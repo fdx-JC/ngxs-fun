@@ -82,7 +82,6 @@ export class UserState {
     });
 
     if (!userEmailsToLoad.length) {
-      debugger;
       return state;
     }
 
