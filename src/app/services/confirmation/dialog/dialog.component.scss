@@ -1,15 +1,25 @@
-@import 'variables';
+@import "variables";
 
-.confirmation-dialog {
+.confirmation {
   &-content {
     padding: $gutter-size * 2;
-
     display: flex;
-
+    gap: $gutter-size;
     &-icon {
-      margin-right: $gutter-size;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $font-size * 2.5;
+      height: $font-size 2.5;
+      border-radius: 50%;
+    }
+
+    &-title {
+      font-weight: 500;
+      font-size: $font-size;
     }
   }
+
   &-actions {
     display: flex;
     justify-content: flex-end;
@@ -17,5 +27,33 @@
     padding: $gutter-size $gutter-size * 1.5;
 
     background-color: $bg-gray;
+  }
+
+  &-content-icon,
+  &-actions-confirmed {
+    .warn & {
+      background-color: $brand-warning;
+      color: $brand-warning-text;
+    }
+
+    .info & {
+      background-color: $brand-info;
+      color: $brand-info-text;
+    }
+
+    .success & {
+      background-color: $brand-success;
+      color: $brand-success-text;
+    }
+
+    .error & {
+      background-color: $brand-error;
+      color: $brand-error-text;
+    }
+
+    .warn & {
+      background-color: $brand-warning;
+      color: $brand-warning-text;
+    }
   }
 }

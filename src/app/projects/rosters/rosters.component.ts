@@ -1,16 +1,18 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { filter, map, Observable, Subscription, take, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ILoadable, LoadableStatus } from 'src/app/models/meta';
 import { IUser } from 'src/app/models/user.model';
 import { User } from '../store/users/users.action';
-import { ILoadableUser, UserState } from '../store/users/users.state';
+import { UserState } from '../store/users/users.state';
 
 @Component({
   selector: 'app-rosters',
@@ -19,14 +21,13 @@ import { ILoadableUser, UserState } from '../store/users/users.state';
 })
 export class RostersComponent implements OnInit, OnChanges {
   @Input() rosterEmails: string[];
-  // @Select(UserState.selectUsers)
-  users$: Observable<ILoadable<IUser>[]>;
+  @Output() removeUser = new EventEmitter<string>();
 
+  // TODO update to user slice select???
   @Select(UserState.selectUsers) allUses$: Observable<ILoadable<IUser>[]>;
 
   users: IUser[];
   loading: boolean;
-
   rosterSubscription: Subscription;
 
   constructor(private store: Store) {}
@@ -54,18 +55,10 @@ export class RostersComponent implements OnInit, OnChanges {
       this.rosterEmails.length
     ) {
       this.store.dispatch(new User.GetUsers(this.rosterEmails));
-
-      this.users$ = this.store
-        .select(UserState.selectUsersByEmails)
-        .pipe(
-          map((fn) => fn(changes['rosterEmails'].currentValue)),
-          filter((users) => !!users)
-        )
-        .pipe(
-          tap((data) => {
-            console.log('data', data);
-          })
-        );
     }
+  }
+
+  onRemoveUser(email: string): void {
+    this.removeUser.emit(email);
   }
 }

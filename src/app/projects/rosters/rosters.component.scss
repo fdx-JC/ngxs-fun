@@ -1,23 +1,18 @@
 @import "variables";
 
+$ICON_SIZE: 20px;
+
 .rosters {
-  position: relative;
-  padding: $gutter-size;
+  display: flex;
+  flex-direction: column;
+  gap: $gutter-size;
 
-  &-loader {
-    width: 100%;
-
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
-
-  &-users {
-    display: flex;
-    flex-direction: column;
-    gap: $gutter-size / 2;
-  }
-
-  &-add-user {
+  &-action {
+    color: $brand-icon;
+    &-icon {
+      height: $ICON_SIZE;
+      width: $ICON_SIZE;
+      font-size: $ICON_SIZE;
+    }
   }
 }

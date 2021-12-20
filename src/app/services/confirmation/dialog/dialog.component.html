@@ -1,44 +1,44 @@
-<div class="confirmation-dialog">
+<div
+  class="confirmation"
+  [class.info]="data.type === info"
+  [class.error]="data.type === error"
+  [class.warn]="data.type === warn"
+  [class.success]="data.type === success"
+>
   <!-- Content -->
-  <div class="confirmation-dialog-content">
+  <div class="confirmation-content">
     <!-- Icon -->
-    <ng-container *ngIf="data.icon.show">
-      <div
-        class="confirmation-dialog-content-icon"
-        [class.info]="data.type === ConfirmationDialogType.INFO"
-        [class.error]="data.type === ConfirmationDialogType.ERROR"
-        [class.warn]="data.type === ConfirmationDialogType.WARN"
-        [class.success]="data.type === ConfirmationDialogType.SUCCESS"
-      >
-        <mat-icon [svgIcon]="data.icon.name"></mat-icon>
-      </div>
-    </ng-container>
+    <div class="confirmation-content-icon">
+      <mat-icon [svgIcon]="data.icon || 'feather:alert-triangle'"></mat-icon>
+    </div>
 
-    <ng-container *ngIf="data.title || data.message">
-      <div class="confirmation-dialog-content-message">
-        <!-- Title -->
-        <ng-container *ngIf="data.title">
-          <div [innerHTML]="data.title"></div>
-        </ng-container>
+    <div *ngIf="data.title || data.message">
+      <!-- Title -->
+      <ng-container *ngIf="data.title">
+        <div class="confirmation-content-title" [innerHTML]="data.title"></div>
+      </ng-container>
 
-        <!-- Message -->
-        <ng-container *ngIf="data.message">
-          <div [innerHTML]="data.message"></div>
-        </ng-container>
-      </div>
-    </ng-container>
+      <!-- Message -->
+      <ng-container *ngIf="data.message">
+        <div [innerHTML]="data.message"></div>
+      </ng-container>
+    </div>
   </div>
 
   <!-- Actions -->
-  <div class="confirmation-dialog-actions">
+  <div class="confirmation-actions">
     <!-- Cancel -->
     <button mat-stroked-button [matDialogClose]="'cancelled'">
-      {{ data.actions.cancel.label }}
+      {{ data.actions?.cancel?.label || "Cancel" }}
     </button>
 
     <!-- Confirm -->
-    <button mat-flat-button [matDialogClose]="'confirmed'">
-      {{ data.actions.confirm.label }}
+    <button
+      mat-flat-button
+      [matDialogClose]="'confirmed'"
+      class="confirmation-actions-confirmed"
+    >
+      {{ data.actions?.confirm?.label || "Confirm" }}
     </button>
   </div>
 </div>

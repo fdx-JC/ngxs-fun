@@ -3,8 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './dialog/dialog.component';
 import {
   ConfirmationDialogType,
-  IConfirmationConfig
-} from './confirmation.types';
+  IConfirmationConfig,
+} from './confirmation.model';
 
 @Injectable()
 export class ConfirmationService {
@@ -12,18 +12,15 @@ export class ConfirmationService {
     type: ConfirmationDialogType.WARN,
     title: 'Confirm action',
     message: 'Are you sure you want to confirm this action?',
-    icon: {
-      name: 'feather:alert-triangle',
-      show: true
-    },
+    icon: 'feather:alert-triangle',
     actions: {
       confirm: {
-        label: 'Confirm'
+        label: 'Confirm',
       },
       cancel: {
-        label: 'Cancel'
-      }
-    }
+        label: 'Cancel',
+      },
+    },
   };
 
   /**
@@ -44,7 +41,7 @@ export class ConfirmationService {
     // Open the dialog
     return this.matDialog.open(ConfirmationDialogComponent, {
       autoFocus: false,
-      data: userConfig
+      data: userConfig,
     });
   }
 }

@@ -8,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class UserAvatarComponent implements OnInit {
   @Input() photo: string | null;
   @Input() name: string | null | undefined;
-
   @Input() size: number;
+  @Input() loading: boolean;
 
   constructor() {}
 

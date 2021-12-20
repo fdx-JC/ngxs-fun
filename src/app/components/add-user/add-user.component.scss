@@ -1,0 +1,17 @@
+@import "variables";
+
+:host {
+  flex: 1 1 auto;
+}
+.add-user {
+  display: flex;
+  align-items: center;
+
+  &-field {
+    flex: 1 1 auto;
+  }
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding: 0;
+}

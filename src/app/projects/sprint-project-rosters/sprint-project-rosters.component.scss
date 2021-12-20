@@ -9,13 +9,10 @@ $BADGE_SIZE: 1.25rem;
 }
 
 .project-roster {
-  background-color: white;
-  border-radius: $border-radius;
-
-  &-header {
+  &-title {
     display: flex;
     justify-content: space-between;
-    padding: $gutter-size / 2 $gutter-size;
+    align-items: center;
   }
 
   &-count {

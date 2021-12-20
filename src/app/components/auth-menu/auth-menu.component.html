@@ -11,7 +11,7 @@
         {{ currentUser?.username }}
       </div>
       <button mat-menu-item (click)="logout()" class="auth-menu-option">
-        <mat-icon>power_settings_new</mat-icon>
+        <mat-icon [svgIcon]="'feather:log-out'"></mat-icon>
         <span>Sign Out</span>
       </button>
     </mat-menu>

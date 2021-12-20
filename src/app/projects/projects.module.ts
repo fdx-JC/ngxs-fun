@@ -4,8 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { projectsRoutes } from './projects.routes';
 import { ProjectsComponent } from './projects.component';
@@ -18,6 +17,8 @@ import { SprintProjectRostersComponent } from './sprint-project-rosters/sprint-p
 import { RostersComponent } from './rosters/rosters.component';
 import { UserState } from './store/users/users.state';
 import { UserItemModule } from '../components/user-item/user-item.module';
+import { ConfirmationModule } from '../services/confirmation/confirmation.module';
+import { AddUserModule } from '../components/add-user/add-user.module';
 
 @NgModule({
   declarations: [
@@ -36,8 +37,9 @@ import { UserItemModule } from '../components/user-item/user-item.module';
     UserItemModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule,
-    MatProgressBarModule,
+    MatExpansionModule,
+    ConfirmationModule,
+    AddUserModule,
   ],
 })
 export class ProjectsModule {}

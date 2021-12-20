@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IUser } from 'src/app/models/user.model';
 
 @Component({
@@ -12,7 +6,8 @@ import { IUser } from 'src/app/models/user.model';
   templateUrl: './user-item.component.html',
   styleUrls: ['./user-item.component.scss'],
 })
-export class UserItemComponent implements OnInit, OnChanges {
+export class UserItemComponent implements OnInit {
+  @Input() loading: boolean;
   @Input() user: IUser;
   @Input() size = 32;
   photo: string | null;
@@ -20,10 +15,4 @@ export class UserItemComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['user'] && changes['user'].currentValue) {
-      this.photo = this.user.photo !== null ? this.user?.photo : null;
-    }
-  }
 }
