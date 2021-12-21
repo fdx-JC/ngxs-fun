@@ -2,14 +2,22 @@
   <app-page-loader></app-page-loader>
 </ng-container>
 <ng-template #loaded>
-  <ng-container *ngIf="currentSprint$ | async as currentSprint">
-    <div class="projects">
-      <app-sprint-projects
-        [sprintProjects]="currentSprint.projects"
-      ></app-sprint-projects>
-    </div>
+  <mat-progress-bar color="accent" [value]="sprintPosition"></mat-progress-bar>
+
+  <ng-container *ngIf="sprints$ | async as sprints">
+    <mat-tab-group [selectedIndex]="index" class="project">
+      <ng-container *ngFor="let sprint of sprints | keyvalue">
+        <mat-tab [label]="sprint.key | displayDateRange">
+          <ng-template matTabContent>
+            <app-sprint-projects
+              [sprintProjects]="sprint.value"
+            ></app-sprint-projects>
+          </ng-template>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
     <app-page-navigation
-      [title]="currentSprint.sprintDate | displayDateRange"
+      [title]="currentSprintDate | displayDateRange"
       [disablePrev]="isFirst"
       [disableNext]="isLast"
       (next)="nextSprint()"

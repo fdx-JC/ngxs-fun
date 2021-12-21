@@ -14,11 +14,6 @@ export interface ISprintProject {
   [sprintDate: string]: IProject[];
 }
 
-export interface ICurrentSprint {
-  sprintDate: string;
-  projects: IProject[];
-}
-
 export class ProjectStateModel {
   entities: ISprintProject;
   currentSprint: number;
@@ -63,20 +58,6 @@ export class ProjectState {
     return state.total;
   }
 
-  @Selector()
-  static selectCurrentSprint(state: ProjectStateModel): ICurrentSprint | null {
-    const key = Object.keys(state.entities)[state.currentSprint];
-
-    if (key) {
-      return {
-        sprintDate: key,
-        projects: state.entities[key],
-      };
-    }
-
-    return null;
-  }
-
   @Action(Project.GetProjects)
   getDataFromState(ctx: StateContext<ProjectStateModel>) {
     const state = ctx.getState();
@@ -116,6 +97,7 @@ export class ProjectState {
   }
 }
 
+// function to find the default current sprint
 const defaultCurrentSprint = (sprints: ISprintProject): number => {
   const sprintKeys = Object.keys(sprints);
   let currentIndex = 0;

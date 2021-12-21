@@ -1,16 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { combineLatest, Observable, Subscription, tap } from 'rxjs';
-import groupBy from 'lodash/groupBy';
-
-import { IProject } from '../models/project.model';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { Project } from './store/projects/projects.actions';
-import {
-  ICurrentSprint,
-  ISprintProject,
-  ProjectState,
-} from './store/projects/projects.state';
-import { isCurrentDateRange } from '../utils/date-helper';
+import { ISprintProject, ProjectState } from './store/projects/projects.state';
 
 @Component({
   selector: 'app-projects',
@@ -22,19 +14,19 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean>;
   @Select(ProjectState.selectSprintProjects)
   sprints$: Observable<ISprintProject>;
-  @Select(ProjectState.selectCurrentSprint)
-  currentSprint$: Observable<ICurrentSprint>;
   @Select(ProjectState.selectCurrentSprintIndex)
   currentIndex$: Observable<number>;
   @Select(ProjectState.selectSprintsTotal)
   total$: Observable<number>;
 
   projectSubscription: Subscription = new Subscription();
-  constructor(private store: Store) {}
-
   index: number;
   isFirst: boolean;
   isLast: boolean;
+  currentSprintDate: string;
+  sprintPosition: number;
+
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new Project.GetProjects());
@@ -42,11 +34,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.projectSubscription = combineLatest([
       this.currentIndex$,
       this.total$,
-    ]).subscribe(([index, total]) => {
+      this.sprints$,
+    ]).subscribe(([index, total, sprints]) => {
       this.index = index;
       this.isFirst = index === 0;
       this.isLast = index + 1 === total;
+      this.sprintPosition = (100 * (index + 1)) / total;
+      this.currentSprintDate = Object.keys(sprints)[index];
     });
+
+    this.projectSubscription.add();
   }
 
   updateCurrentSprint(index: number): void {
@@ -55,12 +52,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   nextSprint() {
     // this.index = this.index + 1;
-    this.store.dispatch(new Project.SetCurrentSprint(this.index + 1));
+    this.updateCurrentSprint(this.index + 1);
   }
 
   prevSprint() {
-    // this.index = this.index - 1;
-    this.store.dispatch(new Project.SetCurrentSprint(this.index - 1));
+    this.updateCurrentSprint(this.index - 1);
   }
 
   ngOnDestroy(): void {

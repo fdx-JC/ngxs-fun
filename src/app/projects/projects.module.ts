@@ -5,6 +5,8 @@ import { NgxsModule } from '@ngxs/store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { projectsRoutes } from './projects.routes';
 import { ProjectsComponent } from './projects.component';
@@ -40,6 +42,8 @@ import { AddUserModule } from '../components/add-user/add-user.module';
     MatExpansionModule,
     ConfirmationModule,
     AddUserModule,
+    MatTabsModule,
+    MatProgressBarModule,
   ],
 })
 export class ProjectsModule {}
