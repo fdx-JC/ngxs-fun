@@ -57,16 +57,6 @@ export class RostersComponent implements OnInit, OnChanges {
       changes['rosterEmails'].currentValue &&
       this.rosterEmails.length
     ) {
-      // HACK??? prevent dispatch api call ??
-      this.userSnapshot = this.store.selectSnapshot(UserState.selectUsers);
-      // all user loaded
-      const loaded = this.userSnapshot?.every(
-        (user) => user.status === LoadableStatus.Loaded
-      );
-      if (this.userSnapshot?.length && loaded) {
-        return;
-      }
-
       this.store.dispatch(new User.GetUsers(this.rosterEmails));
     }
   }
