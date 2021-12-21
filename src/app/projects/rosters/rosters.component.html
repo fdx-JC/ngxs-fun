@@ -1,14 +1,14 @@
 <div class="rosters">
   <div *ngFor="let user of users">
     <app-user-item [user]="user" [loading]="loading">
-      <div *ngIf="!loading" actions>
+      <div *ngIf="!loading && !disabled" actions>
         <button
           mat-icon-button
           class="rosters-action"
           (click)="onRemoveUser(user.mail)"
         >
           <mat-icon
-            [svgIcon]="'feather:user-x'"
+            [svgIcon]="'feather:x-circle'"
             class="rosters-action-icon"
           ></mat-icon>
         </button>

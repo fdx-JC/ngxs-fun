@@ -21,19 +21,6 @@ body {
   background-color: $brand-background;
 }
 
-.swiper {
-  width: 100%;
-  height: 300px;
-  margin: 50px auto;
-}
-
-.swiper-slide {
-  background: #f1f1f1;
-  color: #000;
-  text-align: center;
-  line-height: 300px;
-}
-
 // @import '~@angular/material/theming';
 // consider use material theming class if the project uses more scss functions
 .with-shadow {
@@ -86,4 +73,17 @@ body {
   .mat-dialog-container {
     padding: 0;
   }
+}
+
+// typography
+.title,
+.section-header {
+  font-weight: 500;
+  color: $brand-text;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 1rem;
+  cursor: default;
 }

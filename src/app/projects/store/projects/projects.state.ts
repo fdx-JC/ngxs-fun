@@ -68,8 +68,19 @@ export class ProjectState {
     return state.entities[currentSprintKey] ?? null;
   }
 
+  @Selector()
+  static selectCurrentSprintUnallocated(
+    state: ProjectStateModel
+  ): string[] | null {
+    const currentSprint = this.selectCurrentSprintProjects(state);
+    const rosters = currentSprint.find(
+      (project) => project.name === 'Unallocated'
+    )?.roster;
+    return rosters?.map((roster) => roster.email) ?? null;
+  }
+
   @Action(Project.GetProjects)
-  getDataFromState(ctx: StateContext<ProjectStateModel>) {
+  getDataFromServer(ctx: StateContext<ProjectStateModel>) {
     ctx.patchState({ status: LoadableStatus.Loading });
 
     return this.projectService.getProjects().pipe(
@@ -110,7 +121,19 @@ export class ProjectState {
     const state = ctx.getState();
     const currentSprintKey = Object.keys(state.entities)[state.currentSprint];
 
-    // TODO add it to
+    // move this to unallocated
+    ctx.setState(
+      patch<ProjectStateModel>({
+        entities: patch({
+          [currentSprintKey]: updateItem<IProject>(
+            (project) => project?.name === 'Unallocated',
+            patch<IProject>({
+              roster: insertItem<IRosterItem>(action.roster),
+            })
+          ),
+        }),
+      })
+    );
 
     return ctx.setState(
       patch<ProjectStateModel>({
@@ -135,6 +158,22 @@ export class ProjectState {
   ) {
     const state = ctx.getState();
     const currentSprintKey = Object.keys(state.entities)[state.currentSprint];
+
+    // remove from unallocated
+    ctx.setState(
+      patch<ProjectStateModel>({
+        entities: patch({
+          [currentSprintKey]: updateItem<IProject>(
+            (project) => project?.name === 'Unallocated',
+            patch<IProject>({
+              roster: removeItem<IRosterItem>(
+                (roster) => roster?.email === action.roster.email
+              ),
+            })
+          ),
+        }),
+      })
+    );
 
     return ctx.setState(
       patch<ProjectStateModel>({

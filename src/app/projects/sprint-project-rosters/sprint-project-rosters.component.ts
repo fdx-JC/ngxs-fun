@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, Subscription } from 'rxjs';
-import { ILoadable } from 'src/app/models/meta';
+import { combineLatest, Observable, Subscription, take, tap } from 'rxjs';
+import { ILoadable, LoadableStatus } from 'src/app/models/meta';
 import {
   IProject,
   IRosterItem,
@@ -11,6 +11,7 @@ import { IUser } from 'src/app/models/user.model';
 import { ConfirmationDialogType } from 'src/app/services/confirmation/confirmation.model';
 import { ConfirmationService } from 'src/app/services/confirmation/confirmation.service';
 import { Project } from '../store/projects/projects.actions';
+import { ProjectState } from '../store/projects/projects.state';
 import { UserState } from '../store/users/users.state';
 
 interface IRosterPosition {
@@ -23,13 +24,14 @@ interface IRosterPosition {
   styleUrls: ['./sprint-project-rosters.component.scss'],
 })
 export class SprintProjectRostersComponent implements OnInit, OnDestroy {
-  @Select(UserState.selectUsers) allUses$: Observable<ILoadable<IUser>[]>; // TODO should only select current sprint unallocated users
+  @Select(UserState.selectUsers) allUses$: Observable<ILoadable<IUser>[]>;
+  @Select(ProjectState.selectCurrentSprintUnallocated)
+  unallocatedEmails$: Observable<string[]>;
 
   @Input() project: IProject;
 
   rostersByPosition: IRosterPosition;
   subscription: Subscription;
-
   users: IUser[] = [];
 
   constructor(
@@ -50,17 +52,23 @@ export class SprintProjectRostersComponent implements OnInit, OnDestroy {
       {}
     );
 
-    this.subscription = this.allUses$.subscribe((data) => {
+    this.subscription = combineLatest([
+      this.unallocatedEmails$,
+      this.allUses$,
+    ]).subscribe(([availableUsers, users]) => {
       const userArray: IUser[] = [];
-      data.map((user) => {
-        if (
-          user.value?.displayName &&
-          userArray.findIndex((u) => u.mail === user.value?.mail) === -1
-        ) {
-          userArray.push(user.value);
+      availableUsers.map((email) => {
+        const matched = users.find(
+          (user) =>
+            user.value?.mail === email && user.status === LoadableStatus.Loaded
+        )?.value;
+
+        const existed =
+          userArray.findIndex((user) => user.mail === matched?.mail) > 1;
+        if (matched && !existed) {
+          userArray.push(matched);
         }
       });
-
       this.users = userArray;
     });
   }
@@ -70,8 +78,8 @@ export class SprintProjectRostersComponent implements OnInit, OnDestroy {
     if (!roster) return;
     const confirmation = this.confirmationService.open({
       type: ConfirmationDialogType?.WARN,
-      title: `Remove from ${this.project.name} - ${this.project.sprint}`,
-      message: `Are you sure you want to remove ${email}?`,
+      title: `Deallocate from ${this.project.name} - ${this.project.sprint}`,
+      message: `Are you sure you want to deallocate ${email}?`,
     });
     confirmation.afterClosed().subscribe((result) => {
       if (result === 'confirmed') {

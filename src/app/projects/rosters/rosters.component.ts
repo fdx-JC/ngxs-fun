@@ -21,6 +21,7 @@ import { UserState } from '../store/users/users.state';
 })
 export class RostersComponent implements OnInit, OnChanges {
   @Input() rosterEmails: string[];
+  @Input() disabled: boolean;
   @Output() removeUser = new EventEmitter<string>();
 
   // TODO update to user slice select???

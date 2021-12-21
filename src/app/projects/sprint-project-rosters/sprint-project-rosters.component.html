@@ -3,7 +3,9 @@
     <mat-expansion-panel [expanded]="!!position.value?.length">
       <mat-expansion-panel-header>
         <mat-panel-title class="project-roster-title">
-          {{ position.key }}
+          <div class="section-header">
+            {{ position.key }}
+          </div>
           <div *ngIf="!!position.value?.length" class="project-roster-count">
             {{ position.value?.length }}
           </div>
@@ -11,11 +13,12 @@
       </mat-expansion-panel-header>
       <app-rosters
         [rosterEmails]="position.value"
+        [disabled]="project.name === 'Unallocated'"
         (removeUser)="removeRosterFromSprintProject($event)"
       ></app-rosters>
-      <mat-action-row>
+      <mat-action-row *ngIf="project.name !== 'Unallocated'">
         <app-add-user
-          placeholder="Add new rosters"
+          placeholder="Add new roster"
           [options]="users"
           [position]="position.key"
           (addUser)="addRosterToSprintProject($event)"
