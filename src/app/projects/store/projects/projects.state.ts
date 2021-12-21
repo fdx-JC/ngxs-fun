@@ -121,7 +121,7 @@ export class ProjectState {
     const state = ctx.getState();
     const currentSprintKey = Object.keys(state.entities)[state.currentSprint];
 
-    // move this to unallocated
+    // move roster to unallocated
     ctx.setState(
       patch<ProjectStateModel>({
         entities: patch({
@@ -134,7 +134,7 @@ export class ProjectState {
         }),
       })
     );
-
+    // remove it from the sprint project
     return ctx.setState(
       patch<ProjectStateModel>({
         entities: patch({

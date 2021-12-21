@@ -42,8 +42,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.sprintPosition = (100 * (index + 1)) / total;
       this.currentSprintDate = Object.keys(sprints)[index];
     });
-
-    this.projectSubscription.add();
   }
 
   updateCurrentSprint(index: number): void {

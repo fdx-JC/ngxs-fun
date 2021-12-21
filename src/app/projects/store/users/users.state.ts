@@ -45,27 +45,6 @@ export class UserState {
     return Object.values(state.entities);
   }
 
-  // @Selector() static selectUsersByEmails(state: UserStateModel) {
-  //   return (emails: string[]) =>
-  //     Object.values(state.entities).filter(
-  //       (user) => user.value && emails.includes(user.value?.mail)
-  //     );
-  // }
-
-  @Selector()
-  static selectUsersByEmails(emails: string[]) {
-    return createSelector(
-      [UserState.selectUsers],
-      (state: ILoadable<IUser>[]) => {
-        console.log('...............emails', emails);
-        console.log('.....state', state);
-        return state.filter(
-          (user) => user.value && emails.includes(user.value?.mail)
-        );
-      }
-    );
-  }
-
   @Action(User.GetUsers)
   getDataFromState(
     ctx: StateContext<UserStateModel>,
@@ -73,6 +52,7 @@ export class UserState {
   ) {
     const state = ctx.getState();
 
+    // filter out emails has been loaded
     const userEmailsToLoad = action.emails.filter((email) => {
       const userStatus = state.entities[email]?.status;
       return !(
@@ -85,7 +65,6 @@ export class UserState {
       return state;
     }
 
-    // TODO filter out emails has been loaded
     userEmailsToLoad.map((email) =>
       ctx.setState(
         updateEntity({

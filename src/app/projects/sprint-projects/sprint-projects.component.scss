@@ -1,13 +1,13 @@
 @import "variables";
+
 .sprint-projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
   gap: $gutter-size;
+  padding: $gutter-size * 1;
   &-item {
     display: flex;
     flex-direction: column;
     gap: $gutter-size;
-
-    padding: $gutter-size * 2;
   }
 }

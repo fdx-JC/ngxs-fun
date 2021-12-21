@@ -11,11 +11,14 @@
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-rosters
-        [rosterEmails]="position.value"
-        [disabled]="project.name === 'Unallocated'"
-        (removeUser)="removeRosterFromSprintProject($event)"
-      ></app-rosters>
+      <ng-container *ngIf="position.value.length; else empty">
+        <app-rosters
+          [rosterEmails]="position.value"
+          [disabled]="project.name === 'Unallocated'"
+          (removeUser)="removeRosterFromSprintProject($event)"
+        ></app-rosters>
+      </ng-container>
+      <ng-template #empty> No Assigned Rosters </ng-template>
       <mat-action-row *ngIf="project.name !== 'Unallocated'">
         <app-add-user
           placeholder="Add new roster"
