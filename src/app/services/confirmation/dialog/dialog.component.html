@@ -12,7 +12,7 @@
       <mat-icon [svgIcon]="data.icon || 'feather:alert-triangle'"></mat-icon>
     </div>
 
-    <div *ngIf="data.title || data.message">
+    <div *ngIf="data.title || data.message" class="confirmation-content-text">
       <!-- Title -->
       <ng-container *ngIf="data.title">
         <div class="confirmation-content-title" [innerHTML]="data.title"></div>

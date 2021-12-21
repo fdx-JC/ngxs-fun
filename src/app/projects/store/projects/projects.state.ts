@@ -5,10 +5,11 @@ import { tap, catchError } from 'rxjs/operators';
 import groupBy from 'lodash/groupBy';
 
 import { LoadableStatus } from 'src/app/models/meta';
-import { IProject } from 'src/app/models/project.model';
+import { IProject, IRosterItem } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.services';
 import { Project } from './projects.actions';
 import { isCurrentDateRange } from 'src/app/utils/date-helper';
+import { patch, removeItem, updateItem } from '@ngxs/store/operators';
 
 export interface ISprintProject {
   [sprintDate: string]: IProject[];
@@ -18,7 +19,6 @@ export class ProjectStateModel {
   entities: ISprintProject;
   currentSprint: number;
   total: number;
-  sprints: IProject[] | null;
   status: LoadableStatus | null;
   message: string;
 }
@@ -29,7 +29,6 @@ export class ProjectStateModel {
     entities: {},
     currentSprint: 0,
     total: 0,
-    sprints: null,
     status: null,
     message: '',
   },
@@ -58,6 +57,12 @@ export class ProjectState {
     return state.total;
   }
 
+  @Selector()
+  static selectCurrentSprintProjects(state: ProjectStateModel): IProject[] {
+    const currentSprintKey = Object.keys(state.entities)[state.currentSprint];
+    return state.entities[currentSprintKey] ?? null;
+  }
+
   @Action(Project.GetProjects)
   getDataFromState(ctx: StateContext<ProjectStateModel>) {
     const state = ctx.getState();
@@ -70,7 +75,6 @@ export class ProjectState {
         ctx.setState({
           ...state,
           status: LoadableStatus.Loaded,
-          sprints: data,
           entities: sprintProjects,
           currentSprint: defaultCurrentSprint(sprintProjects),
           total: Object.keys(sprintProjects).length,
@@ -94,6 +98,35 @@ export class ProjectState {
     action: { sprintKey: number }
   ) {
     return ctx.patchState({ currentSprint: action.sprintKey });
+  }
+
+  @Action(Project.RemoveRosterFromProject)
+  removeDataFromState(
+    ctx: StateContext<ProjectStateModel>,
+    action: { rosterEmail: string; projectSprintId: string }
+  ) {
+    const state = ctx.getState();
+    const currentSprintKey = Object.keys(state.entities)[state.currentSprint];
+    console.log('current', currentSprintKey);
+    console.log(
+      'action.............',
+      action.rosterEmail,
+      action.projectSprintId
+    );
+    return ctx.setState(
+      patch<ProjectStateModel>({
+        entities: patch({
+          [currentSprintKey]: updateItem<IProject>(
+            (project) => project?.tableId === action.projectSprintId,
+            patch<IProject>({
+              roster: removeItem<IRosterItem>(
+                (roster) => roster?.email === action.rosterEmail
+              ),
+            })
+          ),
+        }),
+      })
+    );
   }
 }
 

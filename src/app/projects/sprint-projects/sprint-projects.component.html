@@ -1,10 +1,12 @@
 <div class="sprint-projects">
-  <div class="sprint-projects-category" *ngFor="let project of sprintProjects">
+  <div
+    class="sprint-projects-category"
+    *ngFor="let project of projects$ | async"
+  >
     <div class="sprint-projects-category-heading">{{ project.name }}</div>
-    // FTE summary // LIST OF POSITION CARDS
+    // FTE summary
     <app-sprint-project-rosters
-      [sprintId]="project.tableId"
-      [rosters]="project.roster"
+      [project]="project"
     ></app-sprint-project-rosters>
   </div>
 </div>

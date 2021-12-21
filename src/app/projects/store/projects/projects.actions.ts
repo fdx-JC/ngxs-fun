@@ -12,11 +12,11 @@ export namespace Project {
 
   export class AddRosterToProject {
     static readonly type = '[Project Page] Add Roster to Project';
-    constructor(roster: IRosterItem, projectId: string, sprintId: string) {}
+    constructor(public roster: IRosterItem, public projectSprintId: string) {}
   }
 
   export class RemoveRosterFromProject {
     static readonly type = '[Project Page] Remove Roster to Project';
-    constructor(rosterEmail: string, projectId: string, sprintId: string) {}
+    constructor(public rosterEmail: string, public projectSprintId: string) {}
   }
 }

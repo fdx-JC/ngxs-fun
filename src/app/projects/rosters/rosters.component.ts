@@ -45,7 +45,6 @@ export class RostersComponent implements OnInit, OnChanges {
         .map((user) => user.value!)
         .filter((user) => user);
     });
-    // this.users$ = this.store.select(UserState.selectUsersByEmails).pipe(take(1));
   }
 
   ngOnChanges(changes: SimpleChanges): void {

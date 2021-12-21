@@ -5,5 +5,8 @@
   gap: 1rem;
   &-category {
     padding: $gutter-size;
+    &-header {
+      font-size: $font-size;
+    }
   }
 }

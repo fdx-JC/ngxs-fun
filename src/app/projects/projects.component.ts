@@ -59,6 +59,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.updateCurrentSprint(this.index - 1);
   }
 
+  trackByFn(index: number) {
+    return index;
+  }
+
   ngOnDestroy(): void {
     this.projectSubscription?.unsubscribe();
   }

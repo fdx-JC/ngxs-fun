@@ -6,12 +6,12 @@
 
   <ng-container *ngIf="sprints$ | async as sprints">
     <mat-tab-group [selectedIndex]="index" class="project">
-      <ng-container *ngFor="let sprint of sprints | keyvalue">
+      <ng-container
+        *ngFor="let sprint of sprints | keyvalue; trackBy: trackByFn"
+      >
         <mat-tab [label]="sprint.key | displayDateRange">
           <ng-template matTabContent>
-            <app-sprint-projects
-              [sprintProjects]="sprint.value"
-            ></app-sprint-projects>
+            <app-sprint-projects></app-sprint-projects>
           </ng-template>
         </mat-tab>
       </ng-container>
