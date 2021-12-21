@@ -17,6 +17,6 @@ export namespace Project {
 
   export class RemoveRosterFromProject {
     static readonly type = '[Project Page] Remove Roster to Project';
-    constructor(public rosterEmail: string, public projectSprintId: string) {}
+    constructor(public roster: IRosterItem, public projectSprintId: string) {}
   }
 }

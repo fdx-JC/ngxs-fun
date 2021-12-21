@@ -1,5 +1,7 @@
 @import "variables";
 
+$ICON_SIZE: 20px;
+
 :host {
   flex: 1 1 auto;
 }
@@ -9,6 +11,15 @@
 
   &-field {
     flex: 1 1 auto;
+  }
+
+  &-action {
+    color: $brand-icon;
+    &-icon {
+      height: $ICON_SIZE;
+      width: $ICON_SIZE;
+      font-size: $ICON_SIZE;
+    }
   }
 }
 

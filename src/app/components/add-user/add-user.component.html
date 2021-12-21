@@ -1,16 +1,35 @@
 <form class="add-user">
   <mat-form-field class="add-user-field" appearance="outline">
     <mat-label>{{ placeholder }}</mat-label>
-    <input type="text" placeholder="{{ placeholder }}" matInput />
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of options" [value]="option">
-        {{ option }}
+    <input
+      type="text"
+      placeholder="{{ placeholder }}"
+      matInput
+      [formControl]="inputControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onSelect($event)"
+    >
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option.mail"
+      >
+        <app-user-item [user]="option"></app-user-item>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
   <div class="add-user-action">
-    <button mat-icon-button (click)="onAddUser()">
-      <mat-icon [svgIcon]="'feather:plus-square'"></mat-icon>
+    <button
+      mat-icon-button
+      (click)="onAddUser()"
+      [disabled]="!this.selectedUser"
+    >
+      <mat-icon
+        [svgIcon]="'feather:user-plus'"
+        class="add-user-action-icon"
+      ></mat-icon>
     </button>
   </div>
 </form>

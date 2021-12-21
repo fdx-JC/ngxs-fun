@@ -2,12 +2,6 @@
 
 $BADGE_SIZE: 1.25rem;
 
-.project-rosters {
-  display: flex;
-  flex-direction: column;
-  gap: $gutter-size;
-}
-
 .project-roster {
   &-title {
     display: flex;
@@ -31,8 +25,10 @@ $BADGE_SIZE: 1.25rem;
     font-weight: 600;
     white-space: nowrap;
   }
+}
 
-  &-divider {
-    margin: calc($gutter-size / 2) 0;
+:host::ng-deep.project-rosters {
+  .mat-action-row {
+    padding: calc($gutter-size / 2) calc($gutter-size * 1.5);
   }
 }

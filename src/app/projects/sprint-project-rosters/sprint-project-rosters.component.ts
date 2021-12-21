@@ -1,13 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { ILoadable } from 'src/app/models/meta';
 import {
   IProject,
   IRosterItem,
   RosterPosition,
 } from 'src/app/models/project.model';
+import { IUser } from 'src/app/models/user.model';
 import { ConfirmationDialogType } from 'src/app/services/confirmation/confirmation.model';
 import { ConfirmationService } from 'src/app/services/confirmation/confirmation.service';
 import { Project } from '../store/projects/projects.actions';
+import { UserState } from '../store/users/users.state';
 
 interface IRosterPosition {
   [positionName: string]: string[]; // might need to extend to have roster start - end date
@@ -18,10 +22,15 @@ interface IRosterPosition {
   templateUrl: './sprint-project-rosters.component.html',
   styleUrls: ['./sprint-project-rosters.component.scss'],
 })
-export class SprintProjectRostersComponent implements OnInit {
+export class SprintProjectRostersComponent implements OnInit, OnDestroy {
+  @Select(UserState.selectUsers) allUses$: Observable<ILoadable<IUser>[]>; // TODO should only select current sprint unallocated users
+
   @Input() project: IProject;
 
   rostersByPosition: IRosterPosition;
+  subscription: Subscription;
+
+  users: IUser[] = [];
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -40,9 +49,25 @@ export class SprintProjectRostersComponent implements OnInit {
       },
       {}
     );
+
+    this.subscription = this.allUses$.subscribe((data) => {
+      const userArray: IUser[] = [];
+      data.map((user) => {
+        if (
+          user.value?.displayName &&
+          userArray.findIndex((u) => u.mail === user.value?.mail) === -1
+        ) {
+          userArray.push(user.value);
+        }
+      });
+
+      this.users = userArray;
+    });
   }
 
-  removeRosterFromSprint(email: string): void {
+  removeRosterFromSprintProject(email: string): void {
+    const roster = this.project.roster.find((roster) => roster.email === email);
+    if (!roster) return;
     const confirmation = this.confirmationService.open({
       type: ConfirmationDialogType?.WARN,
       title: `Remove from ${this.project.name} - ${this.project.sprint}`,
@@ -51,9 +76,28 @@ export class SprintProjectRostersComponent implements OnInit {
     confirmation.afterClosed().subscribe((result) => {
       if (result === 'confirmed') {
         this.store.dispatch(
-          new Project.RemoveRosterFromProject(email, this.project.tableId)
+          new Project.RemoveRosterFromProject(roster, this.project.tableId)
         );
       }
     });
+  }
+
+  addRosterToSprintProject(event: { email: string; position: string }): void {
+    const userRoster: IRosterItem = {
+      email: event.email,
+      startDate: '',
+      endDate: '',
+      position: event.position,
+      department: '',
+      team: this.project.name,
+      fte: 0,
+    };
+    this.store.dispatch(
+      new Project.AddRosterToProject(userRoster, this.project.tableId)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-<mat-accordion multi>
+<mat-accordion multi class="project-rosters">
   <ng-container *ngFor="let position of rostersByPosition | keyvalue">
     <mat-expansion-panel [expanded]="!!position.value?.length">
       <mat-expansion-panel-header>
@@ -11,10 +11,15 @@
       </mat-expansion-panel-header>
       <app-rosters
         [rosterEmails]="position.value"
-        (removeUser)="removeRosterFromSprint($event)"
+        (removeUser)="removeRosterFromSprintProject($event)"
       ></app-rosters>
       <mat-action-row>
-        <app-add-user placeholder="Add new rosters"></app-add-user
+        <app-add-user
+          placeholder="Add new rosters"
+          [options]="users"
+          [position]="position.key"
+          (addUser)="addRosterToSprintProject($event)"
+        ></app-add-user
       ></mat-action-row>
     </mat-expansion-panel>
   </ng-container>
