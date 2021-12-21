@@ -1,7 +1,10 @@
 <mat-accordion multi class="project-rosters">
   <ng-container *ngFor="let position of rostersByPosition | keyvalue">
     <mat-expansion-panel [expanded]="!!position.value?.length">
-      <mat-expansion-panel-header>
+      <mat-expansion-panel-header
+        class="project-roster-header"
+        [class.is-support]="position.key === supportPosition"
+      >
         <mat-panel-title class="project-roster-title">
           <div class="section-header">
             {{ position.key }}
@@ -18,7 +21,12 @@
           (removeUser)="removeRosterFromSprintProject($event)"
         ></app-rosters>
       </ng-container>
-      <ng-template #empty> No Assigned Rosters </ng-template>
+      <ng-template #empty>
+        <div class="project-roster-empty">
+          <mat-icon [svgIcon]="'feather:frown'"></mat-icon>
+          NO ONE HERE!
+        </div>
+      </ng-template>
       <mat-action-row *ngIf="project.name !== 'Unallocated'">
         <app-add-user
           placeholder="Add new roster"

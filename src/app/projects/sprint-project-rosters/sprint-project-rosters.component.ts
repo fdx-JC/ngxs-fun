@@ -34,6 +34,8 @@ export class SprintProjectRostersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   users: IUser[] = [];
 
+  supportPosition = RosterPosition.SUPPORT;
+
   constructor(
     private confirmationService: ConfirmationService,
     private store: Store

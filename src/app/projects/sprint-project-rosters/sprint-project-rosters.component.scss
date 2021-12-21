@@ -3,6 +3,22 @@
 $BADGE_SIZE: 1.25rem;
 
 .project-roster {
+  &-header {
+    position: relative;
+    &::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      width: 4px;
+      height: 100%;
+      left: 0;
+    }
+    &.is-support {
+      &::before {
+        background-color: $brand-success;
+      }
+    }
+  }
   &-title {
     display: flex;
     justify-content: space-between;
@@ -24,6 +40,13 @@ $BADGE_SIZE: 1.25rem;
     font-size: 10px;
     font-weight: 600;
     white-space: nowrap;
+  }
+  &-empty {
+    display: flex;
+    align-items: center;
+    gap: calc($gutter-size / 2);
+
+    color: $brand-icon;
   }
 }
 
