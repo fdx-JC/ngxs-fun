@@ -8,7 +8,7 @@ export const environment = {
     },
   },
   azureAd: {
-    msalRedirectUri: location.origin,
+    msalRedirectUri: 'https://fdx-jc.github.io/ngxs-fun',
     clientId: '88730fca-9d8d-4eaa-a607-66bf6aa8afdf',
     authority:
       'https://login.microsoftonline.com/b48a9eab-75aa-4a5b-9fd7-f39223245c1a',
