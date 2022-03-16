@@ -6,8 +6,7 @@ export const environment = {
   production: false,
   urls: {
     whoIsSupportingApi: {
-      // base: 'http://127.0.0.1:3000',
-      base: 'https://qa.supporting.digital-backend.findex.dev',
+      base: 'http://127.0.0.1:3000',
       getUsers: 'get-users',
       getProjects: 'get-projects',
     },
