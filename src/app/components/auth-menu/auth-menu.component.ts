@@ -3,7 +3,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { IAuthUser } from 'src/app/models/auth.model';
 import { Select } from '@ngxs/store';
 import { AuthState } from 'src/app/store/auth.state';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth-menu',

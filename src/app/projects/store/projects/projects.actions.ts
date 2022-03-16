@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { IRosterItem } from 'src/app/models/project.model';
 
 export namespace Project {

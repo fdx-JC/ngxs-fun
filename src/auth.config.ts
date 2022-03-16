@@ -11,6 +11,8 @@ import {
 } from '@azure/msal-browser';
 import { environment } from './environments/environment';
 
+const azureAd = environment.azureAd;
+const whoIsSupportingApi = environment.urls.whoIsSupportingApi;
 export function loggerCallback(logLevel: LogLevel, message: string) {
   console.log(message);
 }
@@ -18,9 +20,9 @@ export function loggerCallback(logLevel: LogLevel, message: string) {
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
-      clientId: environment.azureAd.clientId,
-      authority: environment.azureAd.authority,
-      redirectUri: environment.azureAd.msalRedirectUri,
+      clientId: azureAd.clientId,
+      authority: azureAd.authority,
+      redirectUri: azureAd.msalRedirectUri,
       navigateToLoginRequestUrl: true,
     },
     cache: {
@@ -39,7 +41,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
   protectedResourceMap.set('/api/', ['api']);
-  protectedResourceMap.set(environment.urls.whoIsSupportingApi.base, [
+  protectedResourceMap.set(whoIsSupportingApi.base, [
     'files.read',
     'files.readwrite.all',
     'user.read',

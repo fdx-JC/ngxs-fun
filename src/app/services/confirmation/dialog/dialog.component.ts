@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   ConfirmationDialogType,
@@ -10,7 +10,7 @@ import {
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss'],
 })
-export class ConfirmationDialogComponent implements OnInit {
+export class ConfirmationDialogComponent {
   info = ConfirmationDialogType.INFO;
   warn = ConfirmationDialogType.WARN;
   error = ConfirmationDialogType.ERROR;
@@ -20,6 +20,4 @@ export class ConfirmationDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: IConfirmationConfig,
     public matDialogRef: MatDialogRef<ConfirmationDialogComponent>
   ) {}
-
-  ngOnInit(): void {}
 }

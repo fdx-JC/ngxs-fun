@@ -19,8 +19,6 @@ export class AddUserComponent implements OnInit {
   filteredOptions: Observable<IUser[] | null>;
   selectedUser: string;
 
-  constructor() {}
-
   ngOnInit(): void {
     this.filteredOptions = this.inputControl.valueChanges.pipe(
       startWith(''),

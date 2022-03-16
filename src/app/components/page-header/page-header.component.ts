@@ -1,11 +1,11 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 
 @Component({
   selector: 'app-page-header',
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.scss'],
 })
-export class PageHeaderComponent implements OnInit {
+export class PageHeaderComponent {
   @Input() title = 'Who Is Supporting';
 
   showShadow = false;
@@ -16,8 +16,4 @@ export class PageHeaderComponent implements OnInit {
 
     this.showShadow = scrollHeight > 96;
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }

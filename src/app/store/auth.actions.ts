@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { IAuthUser } from 'src/app/models/auth.model';
 
 export namespace Auth {

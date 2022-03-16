@@ -1,6 +1,6 @@
 export interface IUser {
   displayName: string;
   mail: string;
-  photo: any;
+  photo: unknown;
   color?: string;
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { combineLatest, Observable, Subscription, take, tap } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { ILoadable, LoadableStatus } from 'src/app/models/meta';
 import {
   IProject,

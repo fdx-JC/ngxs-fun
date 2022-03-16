@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
@@ -19,7 +20,7 @@ import { UserState } from '../store/users/users.state';
   templateUrl: './rosters.component.html',
   styleUrls: ['./rosters.component.scss'],
 })
-export class RostersComponent implements OnInit, OnChanges {
+export class RostersComponent implements OnInit, OnDestroy {
   @Input() rosterEmails: string[];
   @Input() disabled: boolean;
   @Output() removeUser = new EventEmitter<string>();
@@ -30,13 +31,9 @@ export class RostersComponent implements OnInit, OnChanges {
   loading: boolean;
   rosterSubscription: Subscription;
 
-  userSnapshot: ILoadable<IUser>[];
-
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.userSnapshot = this.store.selectSnapshot(UserState.selectUsers);
-
     this.rosterSubscription = this.allUses$.subscribe((users) => {
       const selectedUsers = users.filter((user) =>
         this.rosterEmails.includes(user.value?.mail!)
@@ -49,19 +46,15 @@ export class RostersComponent implements OnInit, OnChanges {
         .map((user) => user.value!)
         .filter((user) => user);
     });
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['rosterEmails'] &&
-      changes['rosterEmails'].currentValue &&
-      this.rosterEmails.length
-    ) {
-      this.store.dispatch(new User.GetUsers(this.rosterEmails));
-    }
+    this.store.dispatch(new User.GetUsers(this.rosterEmails));
   }
 
   onRemoveUser(email: string): void {
     this.removeUser.emit(email);
+  }
+
+  ngOnDestroy(): void {
+    this.rosterSubscription?.unsubscribe();
   }
 }

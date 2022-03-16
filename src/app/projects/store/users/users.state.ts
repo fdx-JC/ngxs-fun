@@ -1,21 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core';
 import {
   Action,
-  createSelector,
-  Select,
   Selector,
   State,
   StateContext,
   StateOperator,
 } from '@ngxs/store';
 import { catchError, mergeMap, of } from 'rxjs';
-import {
-  patch,
-  append,
-  removeItem,
-  insertItem,
-  updateItem,
-} from '@ngxs/store/operators';
+import { patch } from '@ngxs/store/operators';
 
 import { ILoadable, LoadableStatus } from 'src/app/models/meta';
 import { IUser } from 'src/app/models/user.model';

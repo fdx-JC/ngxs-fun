@@ -9,7 +9,9 @@ const routes: Routes = [
     path: 'projects',
     canActivate: [MsalGuard],
     loadChildren: () =>
-      import('./projects/projects.module').then((m) => m.ProjectsModule),
+      import('./projects/projects.module').then(
+        (module) => module.ProjectsModule
+      ),
   },
   { path: '', redirectTo: 'projects', pathMatch: 'full' },
   { path: 'auth-fail', component: AuthFailComponent },

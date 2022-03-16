@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MsalBroadcastService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Store } from '@ngxs/store';
-import { filter, Observable, of, Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { IAuthUser } from './models/auth.model';
 import { AuthenticationService } from './services/authentication.service';
 import { Auth } from './store/auth.actions';
@@ -17,7 +17,6 @@ export class AppComponent implements OnInit, OnDestroy {
   appSubscription: Subscription = new Subscription();
 
   loginDisplay = false;
-  projects$: Observable<any> = of(null);
   authUser: IAuthUser | null = null;
 
   constructor(

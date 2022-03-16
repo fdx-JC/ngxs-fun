@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-page-navigation',
   templateUrl: './page-navigation.component.html',
   styleUrls: ['./page-navigation.component.scss'],
 })
-export class PageNavigationComponent implements OnInit {
-  @Input() title: string = '';
+export class PageNavigationComponent {
+  @Input() title = '';
   @Input() disablePrev: boolean;
   @Input() disableNext: boolean;
 
@@ -14,10 +14,6 @@ export class PageNavigationComponent implements OnInit {
   @Output() next = new EventEmitter();
 
   hover: boolean;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   goToPreviousStep() {
     this.prev.emit();

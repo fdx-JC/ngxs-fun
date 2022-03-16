@@ -4,7 +4,7 @@ import { catchError, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IProject } from '../models/project.model';
 
-const { whoIsSupportingApi } = environment.urls;
+const whoIsSupportingApi = environment.urls.whoIsSupportingApi;
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {

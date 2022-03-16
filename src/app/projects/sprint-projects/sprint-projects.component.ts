@@ -12,6 +12,4 @@ import { ProjectState } from '../store/projects/projects.state';
 export class SprintProjectsComponent {
   @Select(ProjectState.selectCurrentSprintProjects)
   projects$: Observable<IProject[]>;
-
-  constructor() {}
 }

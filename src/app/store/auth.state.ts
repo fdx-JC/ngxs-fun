@@ -15,8 +15,6 @@ export class AuthStateModel {
 })
 @Injectable()
 export class AuthState {
-  constructor() {}
-
   @Selector()
   static selectCurrentUser(state: AuthStateModel) {
     return state.user;
